@@ -407,6 +407,7 @@
               "sourcecode-repository",
               "artifact-registry",
               "code-inspection-platform",
+              "performance-test-system",
               "monitoring",
               "ldap-server",
               "container-platform",

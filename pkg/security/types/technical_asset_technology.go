@@ -41,6 +41,7 @@ const (
 	SourcecodeRepository
 	ArtifactRegistry
 	CodeInspectionPlatform
+	PerformanceTestSystem
 	Monitoring
 	LDAPServer
 	ContainerPlatform
@@ -102,6 +103,7 @@ func TechnicalAssetTechnologyValues() []TypeEnum {
 		SourcecodeRepository,
 		ArtifactRegistry,
 		CodeInspectionPlatform,
+		PerformanceTestSystem,
 		Monitoring,
 		LDAPServer,
 		ContainerPlatform,
@@ -163,6 +165,7 @@ var TechnicalAssetTechnologyTypeDescription = [...]TypeDescription{
 	{"sourcecode-repository", "Git or similar"},
 	{"artifact-registry", "A registry to store build artifacts"},
 	{"code-inspection-platform", "(Static) Code Analysis)"},
+	{"performance-test-system", "Performance Test system)"},
 	{"monitoring", "A monitoring system (SIEM, logs)"},
 	{"ldap-server", "A LDAP server"},
 	{"container-platform", "A platform for hosting and executing containers"},

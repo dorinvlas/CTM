@@ -123,6 +123,10 @@ func TestParseTechnicalAssetTechnology(t *testing.T) {
 			input:    "code-inspection-platform",
 			expected: CodeInspectionPlatform,
 		},
+		"performance-test-system": {
+        	input:    "performance-test-system",
+        	expected: PerformanceTestSystem,
+        },
 		"monitoring": {
 			input:    "monitoring",
 			expected: Monitoring,
