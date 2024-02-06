@@ -208,7 +208,6 @@ func ParseModel(modelInput *input.Model, builtinRiskRules map[string]risks.RiskR
 		communicationLinks := make([]types.CommunicationLink, 0)
 		if asset.CommunicationLinks != nil {
 			for commLinkTitle, commLink := range asset.CommunicationLinks {
-				constraint := true
 				weight := 1
 				var dataAssetsSent []string
 				var dataAssetsReceived []string
@@ -270,8 +269,6 @@ func ParseModel(modelInput *input.Model, builtinRiskRules map[string]risks.RiskR
 					weight = commLink.DiagramTweakWeight
 				}
 
-				constraint = !commLink.DiagramTweakConstraint
-
 				dataFlowTitle := fmt.Sprintf("%v", commLinkTitle)
 				if err != nil {
 					return nil, err
@@ -301,7 +298,7 @@ func ParseModel(modelInput *input.Model, builtinRiskRules map[string]risks.RiskR
 					DataAssetsSent:         dataAssetsSent,
 					DataAssetsReceived:     dataAssetsReceived,
 					DiagramTweakWeight:     weight,
-					DiagramTweakConstraint: constraint,
+					DiagramTweakConstraint: !commLink.DiagramTweakConstraint,
 				}
 				communicationLinks = append(communicationLinks, commLink)
 				// track all comm links
@@ -413,7 +410,7 @@ func ParseModel(modelInput *input.Model, builtinRiskRules map[string]risks.RiskR
 				if !found {
 					return nil, errors.New("missing referenced technical asset " + technicalAssetsInside[i] + " at trust boundary '" + title + "'")
 				}
-				if checklistToAvoidAssetBeingModeledInMultipleTrustBoundaries[technicalAssetsInside[i]] == true {
+				if checklistToAvoidAssetBeingModeledInMultipleTrustBoundaries[technicalAssetsInside[i]] {
 					return nil, errors.New("referenced technical asset " + technicalAssetsInside[i] + " at trust boundary '" + title + "' is modeled in multiple trust boundaries")
 				}
 				checklistToAvoidAssetBeingModeledInMultipleTrustBoundaries[technicalAssetsInside[i]] = true
@@ -435,6 +432,9 @@ func ParseModel(modelInput *input.Model, builtinRiskRules map[string]risks.RiskR
 			return nil, errors.New("unknown 'type' of trust boundary '" + title + "': " + fmt.Sprintf("%v", boundary.Type))
 		}
 		tags, err := parsedModel.CheckTags(lowerCaseAndTrim(boundary.Tags), "trust boundary '"+title+"'")
+		if err != nil {
+			return nil, err
+		}
 		trustBoundary := types.TrustBoundary{
 			Id:                    id,
 			Title:                 title, //fmt.Sprintf("%v", boundary["title"]),
