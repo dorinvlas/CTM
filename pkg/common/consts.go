@@ -3,7 +3,7 @@ package common
 const (
 	TempDir   = "/dev/shm" // TODO: make configurable via cmdline arg?
 	AppDir    = "/app"
-	BinDir    = "/app"
+	PluginDir = "/app"
 	DataDir   = "/data"
 	OutputDir = "."
 	ServerDir = "/server"
@@ -44,6 +44,7 @@ const (
 	ListModelMacrosCommand      = "list-model-macros"
 	ExplainTypesCommand         = "explain-types"
 	ExplainRiskRulesCommand     = "explain-risk-rules"
+	ExplainRiskCommand          = "explain-risk"
 	ExplainModelMacrosCommand   = "explain-model-macros"
 	Print3rdPartyCommand        = "print-3rd-party-licenses"
 	PrintLicenseCommand         = "print-license"

@@ -1,7 +1,6 @@
 package report
 
 import (
-	"errors"
 	"fmt"
 	"hash/fnv"
 	"os"
@@ -395,7 +394,7 @@ func determineArrowColor(cl types.CommunicationLink, parsedModel *types.ParsedMo
 }
 
 func GenerateDataFlowDiagramGraphvizImage(dotFile *os.File, targetDir string,
-	tempFolder, binFolder, dataFlowDiagramFilenamePNG string, progressReporter progressReporter) error {
+	tempFolder, dataFlowDiagramFilenamePNG string, progressReporter progressReporter) error {
 	progressReporter.Info("Rendering data flow diagram input")
 	// tmp files
 	tmpFileDOT, err := os.CreateTemp(tempFolder, "diagram-*-.gv")
@@ -427,16 +426,16 @@ func GenerateDataFlowDiagramGraphvizImage(dotFile *os.File, targetDir string,
 	cmd.Stderr = os.Stderr
 	err = cmd.Run()
 	if err != nil {
-		return errors.New("graph rendering call failed with error: " + err.Error())
+		return fmt.Errorf("graph rendering call failed with error: %v", err)
 	}
 	// copy into resulting file
 	inputPNG, err := os.ReadFile(tmpFilePNG.Name())
 	if err != nil {
-		return fmt.Errorf("Error copying into resulting file %s: %v", tmpFilePNG.Name(), err)
+		return fmt.Errorf("failed to copy to file %s: %v", tmpFilePNG.Name(), err)
 	}
 	err = os.WriteFile(filepath.Join(targetDir, dataFlowDiagramFilenamePNG), inputPNG, 0600)
 	if err != nil {
-		return fmt.Errorf("Error creating %s: %v", filepath.Join(targetDir, dataFlowDiagramFilenamePNG), err)
+		return fmt.Errorf("failed to create %s: %v", filepath.Join(targetDir, dataFlowDiagramFilenamePNG), err)
 	}
 	return nil
 }
@@ -830,7 +829,7 @@ func determineTechnicalAssetLabelColor(ta types.TechnicalAsset, model *types.Par
 }
 
 func GenerateDataAssetDiagramGraphvizImage(dotFile *os.File, targetDir string,
-	tempFolder, binFolder, dataAssetDiagramFilenamePNG string, progressReporter progressReporter) error { // TODO dedupe with other render...() method here
+	tempFolder, dataAssetDiagramFilenamePNG string, progressReporter progressReporter) error { // TODO dedupe with other render...() method here
 	progressReporter.Info("Rendering data asset diagram input")
 	// tmp files
 	tmpFileDOT, err := os.CreateTemp(tempFolder, "diagram-*-.gv")
@@ -861,16 +860,16 @@ func GenerateDataAssetDiagramGraphvizImage(dotFile *os.File, targetDir string,
 	cmd.Stderr = os.Stderr
 	err = cmd.Run()
 	if err != nil {
-		return errors.New("graph rendering call failed with error: " + err.Error())
+		return fmt.Errorf("graph rendering call failed with error: %v", err)
 	}
 	// copy into resulting file
 	inputPNG, err := os.ReadFile(tmpFilePNG.Name())
 	if err != nil {
-		return fmt.Errorf("Error copying into resulting file %s: %v", tmpFilePNG.Name(), err)
+		return fmt.Errorf("failed to copy to file %s: %v", tmpFilePNG.Name(), err)
 	}
 	err = os.WriteFile(filepath.Join(targetDir, dataAssetDiagramFilenamePNG), inputPNG, 0600)
 	if err != nil {
-		return fmt.Errorf("Error creating %s: %v", filepath.Join(targetDir, dataAssetDiagramFilenamePNG), err)
+		return fmt.Errorf("failed to create %s: %v", filepath.Join(targetDir, dataAssetDiagramFilenamePNG), err)
 	}
 	return nil
 }
