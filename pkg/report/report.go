@@ -4004,7 +4004,7 @@ func (r *pdfReporter) createSharedRuntimes(parsedModel *types.ParsedModel) {
 
 func (r *pdfReporter) createRiskRulesChecked(parsedModel *types.ParsedModel, modelFilename string, skipRiskRules string, buildTimestamp string, modelHash string, customRiskRules map[string]*model.CustomRisk) {
 	r.pdf.SetTextColor(0, 0, 0)
-	title := "Risk Rules Checked by Threagile"
+	title := "Risk Rules Checked by CTM"
 	r.addHeadline(title, false)
 	r.defineLinkTarget("{risk-rules-checked}")
 	r.currentChapterTitleBreadcrumb = title
