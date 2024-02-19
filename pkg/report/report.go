@@ -23,8 +23,8 @@ import (
 	"github.com/wcharczuk/go-chart/drawing"
 )
 
-const fontSizeHeadline, fontSizeHeadlineSmall, fontSizeBody, fontSizeSmall, fontSizeVerySmall = 20, 16, 12, 9, 7
-const /*dataFlowDiagramFullscreen,*/ allowedPdfLandscapePages, embedDiagramLegendPage = /*false,*/ true, false
+const fontSizeHeadline, fontSizeHeadlineSmall, fontSizeBody, fontSizeSmall, fontSizeVerySmall = 20, 16, 12, 10, 9
+const /*dataFlowDiagramFullscreen,*/ allowedPdfLandscapePages, embedDiagramLegendPage = /*false,*/ true, true
 
 type pdfReporter struct {
 	isLandscapePage               bool
@@ -117,8 +117,8 @@ func (r *pdfReporter) createPdfAndInitMetadata(model *types.ParsedModel) {
 	r.pdf = gofpdf.New("P", "mm", "A4", "")
 	r.pdf.SetCreator(model.Author.Homepage, true)
 	r.pdf.SetAuthor(model.Author.Name, true)
-	r.pdf.SetTitle("Threat Model Report: "+model.Title, true)
-	r.pdf.SetSubject("Threat Model Report: "+model.Title, true)
+	r.pdf.SetTitle("CTM report: "+model.Title, true)
+	r.pdf.SetSubject("CTM report: "+model.Title, true)
 	//	r.pdf.SetPageBox("crop", 0, 0, 100, 010)
 	r.pdf.SetHeaderFunc(func() {
 		if r.isLandscapePage {
@@ -132,7 +132,7 @@ func (r *pdfReporter) createPdfAndInitMetadata(model *types.ParsedModel) {
 		r.addBreadcrumb(model)
 		r.pdf.SetFont("Helvetica", "", 10)
 		r.pdf.SetTextColor(127, 127, 127)
-		r.pdf.Text(8.6, 284, "Threat Model Report via Threagile") //: "+parsedModel.Title)
+		r.pdf.Text(8.6, 284, "CTM report via Threagile") //: "+parsedModel.Title)
 		r.pdf.Link(8.4, 281, 54.6, 4, r.homeLink)
 		r.pageNo++
 		text := "Page " + strconv.Itoa(r.pageNo)
@@ -179,7 +179,7 @@ func (r *pdfReporter) createCover(parsedModel *types.ParsedModel) {
 	gofpdi.UseImportedTemplate(r.pdf, r.coverTemplateId, 0, 0, 0, 300)
 	r.pdf.SetFont("Helvetica", "B", 28)
 	r.pdf.SetTextColor(0, 0, 0)
-	r.pdf.Text(40, 110, "Threat Model Report")
+	r.pdf.Text(40, 110, "CTM report")
 	r.pdf.Text(40, 125, uni(parsedModel.Title))
 	r.pdf.SetFont("Helvetica", "", 12)
 	reportDate := parsedModel.Date
@@ -2096,7 +2096,7 @@ func (r *pdfReporter) createSecurityRequirements(parsedModel *types.ParsedModel)
 	} else {
 		html.Write(5, "<br><br><br>")
 	}
-	html.Write(5, "<i>This list is not complete and regulatory or law relevant security requirements have to be "+
+	html.Write(5, "<i>This list is not complete and additional regulatory or law relevant security requirements have to be "+
 		"taken into account as well. Also custom individual security requirements might exist for the project.</i>")
 }
 
@@ -4014,16 +4014,16 @@ func (r *pdfReporter) createRiskRulesChecked(parsedModel *types.ParsedModel, mod
 	r.pdfColorGray()
 	r.pdf.SetFont("Helvetica", "", fontSizeSmall)
 	timestamp := time.Now()
-	strBuilder.WriteString("<b>Threagile Version:</b> " + docs.ThreagileVersion)
-	strBuilder.WriteString("<br><b>Threagile Build Timestamp:</b> " + buildTimestamp)
-	strBuilder.WriteString("<br><b>Threagile Execution Timestamp:</b> " + timestamp.Format("20060102150405"))
+	strBuilder.WriteString("<b>CTM Threagile Version:</b> " + docs.ThreagileVersion)
+	strBuilder.WriteString("<br><b>CTM Threagile Build Timestamp:</b> " + buildTimestamp)
+	strBuilder.WriteString("<br><b>CTM Threagile Execution Timestamp:</b> " + timestamp.Format("20060102150405"))
 	strBuilder.WriteString("<br><b>Model Filename:</b> " + modelFilename)
 	strBuilder.WriteString("<br><b>Model Hash (SHA256):</b> " + modelHash)
 	html.Write(5, strBuilder.String())
 	strBuilder.Reset()
 	r.pdfColorBlack()
 	r.pdf.SetFont("Helvetica", "", fontSizeBody)
-	strBuilder.WriteString("<br><br>Threagile (see <a href=\"https://threagile.io\">https://threagile.io</a> for more details) is an open-source toolkit for agile threat modeling, created by Christian Schneider (<a href=\"https://christian-schneider.net\">https://christian-schneider.net</a>): It allows to model an architecture with its assets in an agile fashion as a YAML file " +
+	strBuilder.WriteString("<br><br>This is customized version of Threagile by Dorin VLAS for Riyad Bank, (see <a href=\"https://threagile.io\">https://threagile.io</a> for more details) is an open-source toolkit for agile threat modeling, created by Christian Schneider (<a href=\"https://christian-schneider.net\">https://christian-schneider.net</a>): It allows to model an architecture with its assets in an agile fashion as a YAML file " +
 		"directly inside the IDE. Upon execution of the Threagile toolkit all standard risk rules (as well as individual custom rules if present) " +
 		"are checked against the architecture model. At the time the Threagile toolkit was executed on the model input file " +
 		"the following risk rules were checked:")

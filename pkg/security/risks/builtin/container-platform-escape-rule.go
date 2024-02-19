@@ -25,7 +25,8 @@ func (*ContainerPlatformEscapeRule) Category() types.RiskCategory {
 		CheatSheet: "https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html",
 		Action:     "Container Infrastructure Hardening",
 		Mitigation: "Apply hardening of all container infrastructures. " +
-			"<p>See for example the <i>CIS-Benchmarks for Docker and Kubernetes</i> " +
+		    "For OpenShift, refer to the <i>OpenShift Container Platform security and compliance</i> guidelines ( <a href=\"https://docs.openshift.com/container-platform/4.14/security/index.html\">https://docs.openshift.com/container-platform/4.14/security/index.html</a> ). " +
+			"<p>On Docker for example <i>CIS-Benchmarks for Docker and Kubernetes</i> " +
 			"as well as the <i>Docker Bench for Security</i> ( <a href=\"https://github.com/docker/docker-bench-security\">https://github.com/docker/docker-bench-security</a> ) " +
 			"or <i>InSpec Checks for Docker and Kubernetes</i> ( <a href=\"https://github.com/dev-sec/cis-kubernetes-benchmark\">https://github.com/dev-sec/cis-docker-benchmark</a> and <a href=\"https://github.com/dev-sec/cis-kubernetes-benchmark\">https://github.com/dev-sec/cis-kubernetes-benchmark</a> ). " +
 			"Use only trusted base images, verify digital signatures and apply image creation best practices. Also consider using Google's <b>Distroless</i> base images or otherwise very small base images. " +

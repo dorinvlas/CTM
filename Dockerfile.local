@@ -2,7 +2,8 @@
 
 ######
 ## Stage 1: Build application with Go's build tools
-######
+###### 
+
 FROM docker.io/library/golang:alpine as build
 
 COPY . /app
